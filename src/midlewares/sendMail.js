@@ -36,7 +36,7 @@ export default (store) => (next) => (action) => {
             );
           })
           .catch((error) => {
-            console.error(error);
+            console.error(error.response.data);
             store.dispatch(
               openSnackBar(
                 "Il y a eu un problème lors de l'envoie du message, veuillez réessayer",
@@ -48,9 +48,10 @@ export default (store) => (next) => (action) => {
       return next(action);
     case SEND_MAIL_CHECKOUT:
       {
-        const pharmacyEmail = store.getState().cart;
+        const { pharmacyEmail } = store.getState().cart;
         const { name, emailBuyer, completeAddress } = action;
-        console.log();
+        console.log(name, emailBuyer, completeAddress);
+        console.log(pharmacyEmail);
         emailjs
           .send(
             'service_x6zecr7',
@@ -67,7 +68,7 @@ export default (store) => (next) => (action) => {
             console.log('SUCCESS!', response.status, response.text);
           })
           .catch((error) => {
-            console.error(error);
+            console.error(error.response.data);
           });
       }
       return next(action);

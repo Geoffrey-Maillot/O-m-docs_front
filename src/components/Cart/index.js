@@ -280,8 +280,9 @@ const CartPage = ({
     // On vide le panier après l'achat ici
     clearCart();
 
-    // je récupère les infos neccessaire à l'envoie du mail de confirmation
+    // Je récupère les infos neccessaire à l'envoie du mail de confirmation
     const { email: emailBuyer } = token;
+    // Je récupère l'adresse fournis par l'utilisateur ...
     const {
       billing_name: name,
       shipping_address_line1: address,
@@ -289,10 +290,10 @@ const CartPage = ({
       shipping_address_city: city,
       shipping_address_country: country,
     } = product;
-
+    // ... et je les concatène
     const completeAddress = `${address}, ${zipCode} ${city}, ${country}`;
 
-    // Et j'envoie le mail
+    // J'envoie le mail
     sendMailCheckout(emailBuyer, name, completeAddress);
 
     const response = await axios.post('http://omedocs.herokuapp.com/checkout', {
