@@ -34,7 +34,7 @@ export default (store) => (next) => (action) => {
             store.dispatch(resultSearchProduct(products));
           })
           .catch((error) => {
-            console.error(error);
+            console.error(error.response.data);
             store.dispatch(openSnackBar('Une erreur est survenue', 'error'));
           })
           .finally(() => {
@@ -60,7 +60,7 @@ export default (store) => (next) => (action) => {
             store.dispatch(resultSearchEstablishment(establishments));
           })
           .catch((error) => {
-            console.error(error);
+            console.error(error.response.data);
             store.dispatch(openSnackBar('Une erreur est survenue', 'error'));
           })
           .finally(() => {
@@ -80,7 +80,7 @@ export default (store) => (next) => (action) => {
             store.dispatch(saveInventoryEstablishment(userInventory));
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
           })
           .finally(() => {
             store.dispatch(onOffLoading());

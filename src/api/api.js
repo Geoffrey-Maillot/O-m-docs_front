@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: process.env.BASE_URL_HEROKU,
-  timeout: 5000,
+  baseURL: process.env.BASE_URL_LOCAL,
+  timeout: 3000,
 });

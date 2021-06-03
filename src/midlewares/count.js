@@ -10,7 +10,8 @@ export default (store) => (next) => (action) => {
         .then((count) => {
           console.log(count);
           store.dispatch(saveCount(count));
-        });
+        })
+        .catch((error) => console.log(error.response.data));
 
       return next(action);
 

@@ -48,14 +48,12 @@ export default (store) => (next) => (action) => {
               region,
             })
             .then(() => {
-              store.dispatch(
-                openSnackBar('Merci de vous être inscrit. Vous pouvez vous connectez', 'success'),
-              );
+              store.dispatch(openSnackBar('Inscription réussi', 'success'));
               store.dispatch(closeOpenAccordion());
               store.dispatch(cleanInputSignUp());
             })
             .catch((error) => {
-              console.error(error);
+              console.error(error.response.data);
               store.dispatch(
                 openSnackBar(
                   "Une erreur s'est produite lors de l'inscription, veuillez réessayer",
@@ -72,7 +70,7 @@ export default (store) => (next) => (action) => {
         api
           .patch(`/editmail/${user_id}`, { newEmail })
           .then((response) => store.dispatch(saveNewMail(response.data.profile.email)))
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error.response.data));
       }
       return next(action);
 
@@ -82,7 +80,7 @@ export default (store) => (next) => (action) => {
         api
           .patch(`/editphone/${user_id}`, { newPhoneNumber })
           .then((response) => store.dispatch(saveNewPhone(response.data.profile.phone_number)))
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error.response.data));
       }
       return next(action);
     default:

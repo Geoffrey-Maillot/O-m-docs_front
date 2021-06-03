@@ -1,17 +1,16 @@
+import jwtDecode from 'jwt-decode';
+import api from 'src/api/api';
+
 import {
   CHANGE_USER_INFORMATIONS,
   LOGIN,
   LOGOUT,
-  LOGIN_FROM_REHYDRATE,
   SAVE_NEW_MAIL,
   SAVE_NEW_PHONE,
   CLEAN_INPUT_SIGNUP,
 } from 'src/actions/user';
 
-import {
-  OPEN_VALIDATION_CHANGE_MODAL,
-  CLOSE_VALIDATION_CHANGE_MODAL,
-} from 'src/actions/utils';
+import { OPEN_VALIDATION_CHANGE_MODAL, CLOSE_VALIDATION_CHANGE_MODAL } from 'src/actions/utils';
 
 import {
   SAVE_IN_ORDER_HISTORY,
@@ -19,8 +18,6 @@ import {
   SAVE_FETCHED_SALES_IN_STATE,
   SAVE_ORDER_STATUS_IN_STATE,
 } from 'src/actions/cart';
-
-import api from 'src/api/api';
 
 export const initialState = {
   user_id: null,
@@ -73,26 +70,9 @@ const reducer = (state = initialState, action = {}) => {
         ...state,
         [action.name]: action.value,
       };
-    case LOGIN_FROM_REHYDRATE: {
-      api.defaults.headers.common.Authorization = `Bearer ${action.accessToken}`;
-      return {
-        ...state,
-        accessToken: action.accessToken,
-        establishment: action.establishment,
-        email: action.email,
-        phoneNumber: action.phoneNumber,
-        rpps: action.rpps,
-        city: action.city,
-        address: action.address,
-        zipCode: action.zipCode,
-        userType: action.userType,
-        user_id: action.user_id,
-        logged: true,
-      };
-    }
+
     case LOGIN: {
-      // Je met le token dans les params de l'api
-      api.defaults.headers.common.Authorization = `Bearer ${action.accessToken}`;
+      // Je decode le Token pour récupérer le user
       const {
         id: user_id,
         email,
@@ -104,7 +84,7 @@ const reducer = (state = initialState, action = {}) => {
         zip_code: zipCode,
         phone_number: phoneNumber,
         user_type: userType,
-      } = action.user;
+      } = jwtDecode(action.accessToken);
       return {
         ...state,
         user_id,

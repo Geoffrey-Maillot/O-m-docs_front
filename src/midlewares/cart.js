@@ -27,7 +27,7 @@ export default (store) => (next) => (action) => {
         .then((response) => {
           store.dispatch(saveInOrderHistory(response.data.newOrder));
         })
-        .catch((error) => console.trace(error));
+        .catch((error) => console.trace(error.response.data));
       return next(action);
     case FETCH_ORDER_HISTORY:
       api
@@ -35,7 +35,7 @@ export default (store) => (next) => (action) => {
         .then((orders) => {
           store.dispatch(saveFetchedOrdersInState(orders.data.orders));
         })
-        .catch((error) => console.trace(error));
+        .catch((error) => console.trace(error.response.data));
       return next(action);
     case FECTH_SALES_HISTORY:
       api
@@ -44,7 +44,7 @@ export default (store) => (next) => (action) => {
           console.log(sales);
           store.dispatch(saveFetchedSalesInState(sales.data.sales));
         })
-        .catch((error) => console.trace(error));
+        .catch((error) => console.trace(error.response.data));
       return next(action);
     case CHANGE_ORDER_STATUS:
       api

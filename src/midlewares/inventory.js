@@ -1,9 +1,6 @@
 import api from 'src/api/api';
-import {
-  openSnackBar,
-  closeModalProduct,
-  onOffLoading,
-} from 'src/actions/utils';
+
+import { openSnackBar, closeModalProduct, onOffLoading } from 'src/actions/utils';
 import {
   DELETE_ROW_FROM_INVENTORY,
   SUBMIT_ADD_PRODUCT,
@@ -31,7 +28,7 @@ export default (store) => (next) => (action) => {
             store.dispatch(saveInventory(userInventory));
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data);
           })
           .finally(() => {
             store.dispatch(onOffLoading());
@@ -45,7 +42,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(deleteRowFromState(result.data.product.id));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
       return next(action);
     }
@@ -55,13 +52,9 @@ export default (store) => (next) => (action) => {
           quantity: action.fieldValue,
         })
         .then((result) =>
-          store.dispatch(
-            saveNewQuantity(
-              result.data.product.quantity,
-              result.data.product.id
-            )
-          )
-        );
+          store.dispatch(saveNewQuantity(result.data.product.quantity, result.data.product.id)),
+        )
+        .catch((error) => console.log(error.response.data));
 
       return next(action);
     case SUBMIT_ADD_PRODUCT: {
@@ -89,7 +82,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(openSnackBar("Le produit a bien été rajouter à l'inventaire", 'success'));
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
           store.dispatch(
             openSnackBar("Un souci est survenu lors de l'ajout d'un produit", 'error'),
           );

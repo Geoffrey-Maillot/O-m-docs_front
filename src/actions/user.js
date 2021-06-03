@@ -27,9 +27,8 @@ export const submitLogin = () => ({
   type: SUBMIT_LOGIN,
 });
 
-export const login = (user, accessToken) => ({
+export const login = (accessToken) => ({
   type: LOGIN,
-  user,
   accessToken,
 });
 
@@ -61,31 +60,6 @@ export const changeUserPhone = (querry, value) => ({
   type: CHANGE_USER_PHONE,
   querry,
   value,
-});
-
-export const loginFromRehydrate = (
-  accessToken,
-  establishment,
-  email,
-  phoneNumber,
-  rpps,
-  city,
-  address,
-  zipCode,
-  userType,
-  user_id,
-) => ({
-  type: LOGIN_FROM_REHYDRATE,
-  accessToken,
-  establishment,
-  email,
-  phoneNumber,
-  rpps,
-  address,
-  city,
-  zipCode,
-  userType,
-  user_id,
 });
 
 export const cleanInputSignUp = () => ({
