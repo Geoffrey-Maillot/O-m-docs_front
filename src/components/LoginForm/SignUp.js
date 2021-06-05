@@ -111,7 +111,7 @@ const SignUp = ({
     if (errorMessageIsOpen) {
       setTimeout(() => {
         closeErrorMessage();
-      }, 4000);
+      }, 6000);
     }
   }, [errorMessageIsOpen]);
   return (

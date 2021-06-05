@@ -28,7 +28,7 @@ const initialState = {
   isExpanded: false, // état ouvert / fermer de la page signup
   activePopList: false, // afficher la PopList qui filtre le Json des médicaments
   errorInputValidation: {
-    // message erreur email/password non correspondant
+    // message erreur signup
     message: '',
     open: true,
   },

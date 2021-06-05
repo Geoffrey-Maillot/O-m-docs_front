@@ -162,19 +162,21 @@ const ProfilPage = ({
                       style={{ transformOrigin: '0 200 0' }}
                       {...(editMailInputIsOpen ? { timeout: 1000 } : {})}
                     >
-                      <TextField
-                        label="E-mail"
-                        name="newEmail"
-                        variant="outlined"
-                        type="email"
-                        value={newEmail}
-                        onChange={handleChangeInput}
-                        className={
-                          editMailInputIsOpen
-                            ? 'profil-box__content-elt__change-email'
-                            : classes.field
-                        }
-                      />
+                      <form>
+                        <TextField
+                          label="E-mail"
+                          name="newEmail"
+                          variant="outlined"
+                          type="email"
+                          value={newEmail}
+                          onChange={handleChangeInput}
+                          className={
+                            editMailInputIsOpen
+                              ? 'profil-box__content-elt__change-email'
+                              : classes.field
+                          }
+                        />
+                      </form>
                     </Grow>
                     <IconButton
                       color="primary"

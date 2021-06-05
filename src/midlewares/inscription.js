@@ -53,7 +53,9 @@ export default (store) => (next) => (action) => {
               store.dispatch(cleanInputSignUp());
             })
             .catch((error) => {
-              console.error(error.response.data);
+              console.error(error.response);
+              const { messageDetail } = error.response.data.error;
+              store.dispatch(openErrorInputValidation(messageDetail));
               store.dispatch(
                 openSnackBar(
                   "Une erreur s'est produite lors de l'inscription, veuillez réessayer",
@@ -70,7 +72,11 @@ export default (store) => (next) => (action) => {
         api
           .patch(`/editmail/${user_id}`, { newEmail })
           .then((response) => store.dispatch(saveNewMail(response.data.profile.email)))
-          .catch((error) => console.log(error.response.data));
+          .catch((error) => {
+            console.log(error.response.data);
+            const { messageDetail } = error.response.data.error;
+            store.dispatch(openSnackBar(messageDetail, 'error'));
+          });
       }
       return next(action);
 
