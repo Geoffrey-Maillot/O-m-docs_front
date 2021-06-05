@@ -6,8 +6,10 @@ import Chatbox from 'src/containers/Chatbot';
 // Import react-router-dom pour ajouter des links aux boutons
 import { NavLink, Link } from 'react-router-dom';
 
-// Import des composants depuis MATERIAL UI
+// Import npm
+import DOMPurify from 'dompurify';
 
+// Import des composants depuis MATERIAL UI
 import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
@@ -87,10 +89,7 @@ const LeftMenu = ({
       bgcolor="#D8F3FF"
       className="left-menu"
     >
-      <IconButton
-        style={{ marginLeft: 'auto' }}
-        onClick={() => openCloseMenu()}
-      >
+      <IconButton style={{ marginLeft: 'auto' }} onClick={() => openCloseMenu()}>
         <ExitToAppIcon
           size="large"
           style={{
@@ -113,16 +112,12 @@ const LeftMenu = ({
           component="h6"
           className="left-menu__welcome-message"
           align="center"
-        >
-          {establishment}
-        </Typography>
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(establishment),
+          }}
+        />
       )}
-      <Box
-        display="flex"
-        flexDirection="column"
-        textAlign="center"
-        className="let-menu__btn-box"
-      >
+      <Box display="flex" flexDirection="column" textAlign="center" className="let-menu__btn-box">
         <Divider />
         <Button
           variant="outlined"

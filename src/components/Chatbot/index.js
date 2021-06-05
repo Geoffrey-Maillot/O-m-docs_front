@@ -1,9 +1,12 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component } from 'react';
+import React from 'react';
 import ChatBot from 'react-simple-chatbot';
 import { ThemeProvider } from 'styled-components';
 import { Link } from 'react-router-dom';
+
+// Import npm
+import DOMPurify from 'dompurify';
 
 // all available config props
 const config = {
@@ -20,6 +23,7 @@ const config = {
   userFontColor: '#fff',
 };
 function SimpleForm({ userType, establishment }) {
+  establishment = DOMPurify.sanitize(establishment);
   return (
     <ThemeProvider theme={config}>
       <ChatBot

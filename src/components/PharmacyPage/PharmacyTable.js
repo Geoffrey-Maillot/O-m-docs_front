@@ -3,6 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Import npm
+import DOMPurify from 'dompurify';
+
 // Import from MATERIAL-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -36,16 +39,7 @@ const columns = [
 ];
 
 // Fonction qui va insérer les données dans le tableau
-function createData(
-  id,
-  name,
-  cis,
-  expirationDate,
-  quantity,
-  price,
-  quantityToBuy,
-  addToCart
-) {
+function createData(id, name, cis, expirationDate, quantity, price, quantityToBuy, addToCart) {
   return {
     id,
     name,
@@ -104,9 +98,7 @@ const PharmacyTable = ({
 
   // Reset de la valeur de tous les inputs
   const handleReset = () => {
-    Array.from(document.querySelectorAll('input')).forEach(
-      (input) => (input.value = '')
-    );
+    Array.from(document.querySelectorAll('input')).forEach((input) => (input.value = ''));
   };
 
   // Gestion de la soumission du formulaire addProduct pour l'envois au panier
@@ -149,10 +141,7 @@ const PharmacyTable = ({
       handleShake(event);
       openSnackBar("Vous devez être connecté en tant qu'hôpital", 'warning');
       // On va vérifier que la quantité n'est pas supérieur à la quantité dispo de l'article
-    } else if (
-      Number(quantityToBuy) > Number(quantity) ||
-      Number(quantityToBuy) === 0
-    ) {
+    } else if (Number(quantityToBuy) > Number(quantity) || Number(quantityToBuy) === 0) {
       handleShake(event);
     } // On vérifie si le produit est déja dans le panier
     else if (isAlreadyInCart === true) {
@@ -162,10 +151,7 @@ const PharmacyTable = ({
       // On vérifie si la commande ne comporte qu'une seul pharmacyId
       if (Number(pharmacyToOrder) !== Number(pharmacyid)) {
         handleShake(event);
-        openSnackBar(
-          "Vous ne pouvez commander qu'auprès d'une pharmacie à la fois",
-          'warning'
-        );
+        openSnackBar("Vous ne pouvez commander qu'auprès d'une pharmacie à la fois", 'warning');
       } else {
         // Fonction pour vider les champs
         handleReset();
@@ -221,18 +207,15 @@ const PharmacyTable = ({
             <AddShoppingCartIcon />
           </IconButton>
         </form>
-      </Box>
-    )
+      </Box>,
+    ),
   );
 
   // variable crée pour conditioner l'afficher du tableau
   let typeRender = '';
   if (establishment[0].user_type === 'hospital') {
     typeRender = 'hospital';
-  } else if (
-    establishment[0].user_type === 'pharmacy' &&
-    inventory.length === 0
-  ) {
+  } else if (establishment[0].user_type === 'pharmacy' && inventory.length === 0) {
     typeRender = 'pharmacyHasNoInventory';
   } else {
     typeRender = 'pharmacyHasInventory';
@@ -271,22 +254,20 @@ const PharmacyTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => (
-                    <TableRow hover tabIndex={-1} key={row.id} size="small">
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number'
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  ))}
+                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                  <TableRow hover tabIndex={-1} key={row.id} size="small">
+                    {columns.map((column) => {
+                      const value = row[column.id];
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'string'
+                            ? column.format(DOMPurify(value))
+                            : value}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -304,9 +285,7 @@ const PharmacyTable = ({
       ) : typeRender === 'pharmacyHasNoInventory' ? (
         // Si l'établissement est une pharmacie sans inventaire
         <div className="message">
-          <h1 className="message__text">
-            Cette pharmacie n'a pas de médicament en stock
-          </h1>
+          <h1 className="message__text">Cette pharmacie n'a pas de médicament en stock</h1>
           <div className="message__img">
             <img src={pharmacien} alt="pharmacien" />
           </div>
@@ -314,9 +293,7 @@ const PharmacyTable = ({
       ) : (
         // Si l'établissement est un hôpital
         <div className="message">
-          <h1 className="message__text">
-            Pas de stock à afficher pour les hôpitaux
-          </h1>
+          <h1 className="message__text">Pas de stock à afficher pour les hôpitaux</h1>
           <div className="message__img">
             <img src={pharmacien} alt="pharmacien" />
           </div>

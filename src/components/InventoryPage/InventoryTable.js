@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// Import npm
+import DOMPurify from 'dompurify';
+
 // Import from MATERIAL-UI
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -225,7 +228,9 @@ const InventoryTable = ({
                   const value = row[column.id];
                   return (
                     <TableCell key={column.id} align="left">
-                      {column.format && typeof value === 'number' ? column.format(value) : value}
+                      {column.format && typeof value === 'string'
+                        ? column.format(DOMPurify.sanitize(value))
+                        : value}
                     </TableCell>
                   );
                 })}

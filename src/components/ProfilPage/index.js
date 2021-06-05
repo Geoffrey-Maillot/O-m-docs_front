@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// Import npm
+import DOMPurify from 'dompurify';
+
 // Import COMPONENTS
 import LeftMenu from 'src/containers/LeftMenu';
 import Footer from 'src/components/Footer';
@@ -96,12 +99,7 @@ const ProfilPage = ({
 
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-between"
-        height="100vh"
-      >
+      <Box display="flex" flexDirection="column" justifyContent="space-between" height="100vh">
         <Box height="100%" width="100%" display="flex" id="body">
           <LeftMenu />
           <Box
@@ -128,52 +126,37 @@ const ProfilPage = ({
               >
                 Votre profil
               </Typography>
-              <Box
-                p={3}
-                boxShadow={4}
-                borderRadius="15px"
-                className="profil-box"
-              >
-                <img
-                  className="profil-box__main-title"
-                  src={profilLogo}
-                  alt="profil-logo"
-                />
+              <Box p={3} boxShadow={4} borderRadius="15px" className="profil-box">
+                <img className="profil-box__main-title" src={profilLogo} alt="profil-logo" />
                 <div className="profil-box__content">
                   <div className="profil-box__content-elt">
-                    <p className="profil-box__content-elt__infos">
-                      Nom de l'organisme:
-                    </p>
-                    <p className="profil-box__content-elt__content">
-                      {establishment}
-                    </p>
+                    <p className="profil-box__content-elt__infos">Nom de l'organisme:</p>
+                    <p
+                      className="profil-box__content-elt__content"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(establishment),
+                      }}
+                    />
                   </div>
                   <Divider color="primary" />
                   <div className="profil-box__content-elt">
                     <p
-                      className={
-                        editMailInputIsOpen
-                          ? 'hidden'
-                          : 'profil-box__content-elt__infos'
-                      }
+                      className={editMailInputIsOpen ? 'hidden' : 'profil-box__content-elt__infos'}
                     >
                       e-mail:
                     </p>
-                    <IconButton
-                      onClick={handleEditMailBtn}
-                      className={classes.btn}
-                    >
+                    <IconButton onClick={handleEditMailBtn} className={classes.btn}>
                       <EditIcon />
                     </IconButton>
                     <p
                       className={
-                        editMailInputIsOpen
-                          ? 'hidden'
-                          : 'profil-box__content-elt__content'
+                        editMailInputIsOpen ? 'hidden' : 'profil-box__content-elt__content'
                       }
-                    >
-                      {email}
-                    </p>
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(email),
+                      }}
+                    />
+
                     <Grow
                       in={editMailInputIsOpen}
                       style={{ transformOrigin: '0 200 0' }}
@@ -205,11 +188,7 @@ const ProfilPage = ({
                   <Divider />
                   <div className="profil-box__content-elt">
                     <p
-                      className={
-                        editPhoneInputIsOpen
-                          ? 'hidden'
-                          : 'profil-box__content-elt__infos'
-                      }
+                      className={editPhoneInputIsOpen ? 'hidden' : 'profil-box__content-elt__infos'}
                     >
                       N° de téléphonne:
                     </p>
@@ -222,13 +201,13 @@ const ProfilPage = ({
                     </IconButton>
                     <p
                       className={
-                        editPhoneInputIsOpen
-                          ? 'hidden'
-                          : 'profil-box__content-elt__content'
+                        editPhoneInputIsOpen ? 'hidden' : 'profil-box__content-elt__content'
                       }
-                    >
-                      {phoneNumber}
-                    </p>
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(phoneNumber),
+                      }}
+                    />
+
                     <Grow
                       in={editPhoneInputIsOpen}
                       style={{ transformOrigin: '0 200 0' }}
@@ -260,28 +239,42 @@ const ProfilPage = ({
                   <Divider />
                   <div className="profil-box__content-elt">
                     <p className="profil-box__content-elt__infos">RPPS:</p>
-                    <p className="profil-box__content-elt__content">{rpps}</p>
+                    <p
+                      className="profil-box__content-elt__content"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(rpps),
+                      }}
+                    />
                   </div>
                   <Divider />
                   <div className="profil-box__content-elt">
                     <p className="profil-box__content-elt__infos">Ville:</p>
-                    <p className="profil-box__content-elt__content">{city}</p>
+                    <p
+                      className="profil-box__content-elt__content"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(city),
+                      }}
+                    />
                   </div>
                   <Divider />
                   <div className="profil-box__content-elt">
                     <p className="profil-box__content-elt__infos">Adresse:</p>
-                    <p className="profil-box__content-elt__content">
-                      {address}
-                    </p>
+                    <p
+                      className="profil-box__content-elt__content"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(address),
+                      }}
+                    />
                   </div>
                   <Divider />
                   <div className="profil-box__content-elt">
-                    <p className="profil-box__content-elt__infos">
-                      Code postal:
-                    </p>
-                    <p className="profil-box__content-elt__content">
-                      {zipCode}
-                    </p>
+                    <p className="profil-box__content-elt__infos">Code postal:</p>
+                    <p
+                      className="profil-box__content-elt__content"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(zipCode),
+                      }}
+                    />
                   </div>
                 </div>
                 <DialogModal validation={handleValidation} />

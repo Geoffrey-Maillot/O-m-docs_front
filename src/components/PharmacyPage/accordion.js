@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Import npm
+import DOMPurify from 'dompurify';
+
 // Material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
@@ -70,9 +73,10 @@ const AccordionsPharmacyDetails = ({ establishment, setOpen }) => {
             style={{ marginRight: '20px' }}
             color={establishment[0].user_type === 'hospital' ? 'red' : 'green'}
           />
-          <Typography className={classes.heading}>
-            {establishment[0].establishment}
-          </Typography>
+          <Typography
+            className={classes.heading}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(establishment[0].establishment) }}
+          />
         </AccordionSummary>
         <AccordionDetails className={classes.body}>
           <Box
@@ -86,9 +90,11 @@ const AccordionsPharmacyDetails = ({ establishment, setOpen }) => {
             p={2}
             bgcolor="#FFF"
           >
-            <p>{establishment[0].address}</p>
-            <p>{establishment[0].zip_code}</p>
-            <p>{establishment[0].city}</p>
+            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(establishment[0].address) }} />
+            <p
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(establishment[0].zip_code) }}
+            />
+            <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(establishment[0].city) }} />
             <Button
               variant="contained"
               color="primary"
@@ -98,7 +104,12 @@ const AccordionsPharmacyDetails = ({ establishment, setOpen }) => {
               href={`tel: ${establishment[0].phone_number}`}
               startIcon={<PhoneForwardedIcon />}
             >
-              {establishment[0].phone_number}
+              <p
+                style={{ margin: 0 }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(establishment[0].phone_number),
+                }}
+              />
             </Button>
             <Divider />
             <Button
@@ -109,7 +120,12 @@ const AccordionsPharmacyDetails = ({ establishment, setOpen }) => {
               startIcon={<EmailIcon />}
               href={`mailto: ${establishment[0].email}`}
             >
-              {establishment[0].email}
+              <p
+                style={{ margin: 0 }}
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(establishment[0].email),
+                }}
+              />
             </Button>
             <img
               src={map}

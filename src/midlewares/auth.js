@@ -40,8 +40,8 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.error(error.response.data);
-          const { detail } = error.response.data.error;
-          store.dispatch(openSnackBar(detail, 'error'));
+          const { messageDetail } = error.response.data.error;
+          store.dispatch(openSnackBar(messageDetail, 'error'));
         });
       return next(action);
     }
