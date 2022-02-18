@@ -114,6 +114,7 @@ const SignUp = ({
       }, 6000);
     }
   }, [errorMessageIsOpen]);
+
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordion} expanded={isExpanded}>
